@@ -1,4 +1,4 @@
-I = imread('arnolfi.jpg');
+I = imread('birth_of_venus.jpg');
 grayImage = rgb2gray(I);
 points = detectSURFFeatures(grayImage);
 %display location of interest
