@@ -29,22 +29,26 @@ minSetCount = min([imgSets.Count]);
 imgSets = partition(imgSets,minSetCount,'randomize');
 
 [trainingSets, validationSets] = partition(imgSets, 0.3, 'randomize');
-
+[trainingSets_m2, validationSets_m2] = partition(imgSets, 0.7, 'randomize');
 extractor = @getHogFeatures;
 bag_hog = bagOfFeatures(trainingSets, 'CustomExtractor',extractor);
 bag = bagOfFeatures(trainingSets);
 
 
 categoryClassifier = trainImageCategoryClassifier(trainingSets, bag);
+categoryClassifier_hog = trainImageCategoryClassifier(trainingSets, bag_hog);
+confMatrix_training = evaluate(categoryClassifier, trainingSets);
+confMatrix_validation = evaluate(categoryClassifier, validationSets);
 
-confMatrix1 = evaluate(categoryClassifier, trainingSets);
-
-confMatrix2 = evaluate(categoryClassifier, validationSets);
+confMatrix_training_hog = evaluate(categoryClassifier_hog, trainingSets);
+confMatrix_validation_hog = evaluate(categoryClassifier_hog, validationSets);
 
 % Compute average accuracy
-mean(diag(confMatrix2));
+accuracy_surf = mean(diag(confMatrix_validation));
+accuracy_hog = mean(diag(confMatrix_validation_hog));
 
-
+categoryClassifier_m2 = trainImageCategoryClassifier(trainingSets_m2, bag);
+categoryClassifier_hog_m2 = trainImageCategoryClassifier(trainingSets_m2, bag_hog);
 %imds = imageDatastore(fullfile('/Users/yigitozgumus/Desktop/Cmpe492/CmpE492Final/Cmpe 492-Matlab/Classifier-mark1/data',categories), 'LabelSource', 'foldernames');
 %tbl = countEachLabel(imds);
 %minSetCount = min(tbl{:,2}); % determine the smallest amount of images in a category
