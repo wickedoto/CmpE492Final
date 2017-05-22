@@ -14,7 +14,7 @@ categories = {'american_gothic_parody',...
                 'seurat_sundey_afternoon_on_la_grande_jatte_parody',...
                 'randomImages'};
             
-imds = imageDatastore(fullfile('/Users/yigitozgumus/Desktop/Cmpe492/CmpE492Final/Cmpe 492-Matlab/Classifier-mark1/data',categories), 'LabelSource', 'foldernames');
+imds = imageDatastore(fullfile('/Users/yigitozgumus/Desktop/Cmpe492/CmpE492Final/Cmpe 492-Matlab/data',categories), 'LabelSource', 'foldernames');
 
 % Set the ImageDatastore ReadFcn
 imds.ReadFcn = @(filename)readAndPreprocessImage(filename);
